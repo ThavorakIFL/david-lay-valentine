@@ -1,0 +1,472 @@
+@font-face {
+    font-family: "Starborn";
+    src:
+        url(/Starborn.ttf) format("truetype"),
+        url(/Starborn.otf) format("opentype");
+}
+
+:root {
+    font-family: "Starborn", system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url(/background.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* ✅ Already there - prevents scrolling */
+    position: fixed; /* ✅ ADD THIS - prevents any body scroll */
+    width: 100%;
+    height: 100%;
+}
+
+.viewport-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    padding: 1rem; /* Add padding for mobile */
+}
+
+.card {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: relative;
+    max-width: 90vw; /* Prevent card from being too wide on mobile */
+    width: 100%;
+}
+
+.card-gif {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    max-width: 90%; /* Ensure it fits on small screens */
+    height: auto;
+    aspect-ratio: 1/1; /* Maintain square ratio */
+    object-fit: cover;
+}
+
+.card-main-image {
+    width: 250px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 90%; /* Ensure it fits on small screens */
+}
+
+.main-text {
+    font-size: clamp(1.5rem, 5vw, 1.75rem); /* Responsive font size */
+    text-align: center;
+    margin: 0 0 1rem 0;
+    padding: 0 1rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px #f26a8d;
+}
+
+.cute-text {
+    font-size: clamp(1rem, 3vw, 1.2rem); /* Responsive font size */
+    color: #ffffff;
+    text-shadow: 0 0 8px #f26a8d;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+.buttons {
+    position: relative;
+    height: 78px;
+    width: 100%;
+    min-width: 250px;
+    pointer-events: auto;
+}
+
+button {
+    position: absolute;
+    padding: 20px 36px;
+    border-radius: 40px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    font-family: inherit;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+button:active {
+    transform: scale(0.94);
+}
+
+#yes {
+    left: 12%;
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: #fff;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.55);
+}
+
+#yes:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(255, 77, 109, 0.7);
+}
+
+#next {
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: #fff;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.55);
+    position: relative;
+}
+
+#next:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 20px 40px rgba(255, 77, 109, 0.7);
+}
+
+#no {
+    position: fixed;
+    pointer-events: auto;
+    background: rgba(255, 255, 255, 0.9);
+    color: #777;
+    /* ✅ ADD THESE to match Yes button style */
+    transition: all 0.3s ease; /* Smooth movement */
+}
+
+#no:hover {
+    background: rgba(255, 255, 255, 0.95);
+    /* ✅ ADD THIS for better visual feedback */
+    transform: scale(1.05);
+}
+
+/* Animation keyframes */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleInCenter {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animation classes */
+.animate-card {
+    animation: scaleInCenter 0.6s ease-out;
+}
+
+.animate-image {
+    animation: slideInUp 0.6s ease-out 0.1s both;
+}
+
+.animate-text {
+    animation: slideInUp 0.6s ease-out 0.2s both;
+}
+
+.animate-button {
+    animation: slideInUp 0.6s ease-out 0.3s both !important;
+}
+
+/* Floating Hearts Container */
+.hearts-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999; /* Must be high */
+}
+
+/* Individual Floating Heart */
+.heart {
+    position: absolute;
+    animation: floatUp linear infinite;
+}
+
+/* Floating Animation */
+@keyframes floatUp {
+    from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh) scale(0.5);
+        opacity: 0;
+    }
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: #535bf2;
+}
+
+/* ========================================
+   RESPONSIVE MEDIA QUERIES
+   ======================================== */
+
+/* Mobile devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .viewport-container {
+        padding: 0.5rem;
+    }
+
+    .card {
+        padding: 1.5rem 1rem;
+        max-width: 95vw;
+    }
+
+    .card-gif {
+        width: 150px;
+        height: 150px;
+    }
+
+    .card-main-image {
+        width: 180px;
+        max-width: 85%;
+    }
+
+    .main-text {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .cute-text {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    button {
+        padding: 15px 28px;
+        font-size: 14px;
+    }
+
+    .buttons {
+        min-width: 200px;
+        height: 68px;
+    }
+
+    #yes {
+        left: 5%;
+    }
+
+    /* Reduce heart count on mobile for better performance */
+    .heart:nth-child(n + 11) {
+        display: none;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .card {
+        padding: 1.75rem 1.25rem;
+        max-width: 90vw;
+    }
+
+    .card-gif {
+        width: 175px;
+        height: 175px;
+    }
+
+    .card-main-image {
+        width: 220px;
+    }
+
+    .main-text {
+        font-size: 1.75rem;
+    }
+
+    .cute-text {
+        font-size: 1.1rem;
+    }
+
+    button {
+        padding: 18px 32px;
+        font-size: 15px;
+    }
+
+    .buttons {
+        min-width: 230px;
+    }
+
+    #yes {
+        left: 8%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .card {
+        padding: 2rem 1.5rem;
+        max-width: 85vw;
+    }
+
+    .card-gif {
+        width: 190px;
+        height: 190px;
+    }
+
+    .card-main-image {
+        width: 240px;
+    }
+
+    .main-text {
+        font-size: 2rem;
+    }
+
+    .cute-text {
+        font-size: 1.15rem;
+    }
+
+    #yes {
+        left: 10%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .card {
+        max-width: 80vw;
+    }
+
+    .card-gif {
+        width: 200px;
+        height: 200px;
+    }
+
+    .card-main-image {
+        width: 250px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .card {
+        max-width: 700px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    .viewport-container {
+        padding: 0.5rem;
+    }
+
+    .card {
+        padding: 1rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .card-gif,
+    .card-main-image {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 0.5rem;
+    }
+
+    .main-text {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .cute-text {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 13px;
+    }
+
+    .buttons {
+        height: 58px;
+    }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .main-text,
+    .cute-text {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .heart {
+        animation-duration: 8s; /* Slower animation */
+    }
+
+    .animate-card,
+    .animate-image,
+    .animate-text,
+    .animate-button {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+    /* Already handled in root, but can add specific overrides here */
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+    a:hover {
+        color: #747bff;
+    }
+    button {
+        background-color: #f9f9f9;
+    }
+}
